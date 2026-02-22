@@ -1,0 +1,20 @@
+{
+  "name": "production-mesh",
+  "nodes": [
+    {
+      "id": "edge-1",
+      "role": "gateway",
+      "services": [
+        {"name": "https", "port": 443, "public": true, "encrypted": true, "authenticated": true, "criticality": 5},
+        {"name": "metrics", "port": 9100, "public": false, "encrypted": false, "authenticated": false, "criticality": 2}
+      ]
+    },
+    {
+      "id": "worker-3",
+      "role": "backend",
+      "services": [
+        {"name": "grpc", "port": 50051, "public": false, "encrypted": true, "authenticated": true, "criticality": 4}
+      ]
+    }
+  ]
+}
