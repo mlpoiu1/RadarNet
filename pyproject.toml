@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "radarnet"
+version = "0.1.0"
+description = "A tiny threat-surface radar for service networks"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{name = "RadarNet Contributors"}]
+keywords = ["security", "network", "risk", "radar"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+]
+
+[project.scripts]
+radarnet = "radarnet.cli:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
