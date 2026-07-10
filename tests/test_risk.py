@@ -49,7 +49,9 @@ def test_empty_node_is_treated_as_visibility_gap():
 def test_invalid_port_raises_validation_error():
     network = Network(
         name="demo",
-        nodes=(Node(id="api-1", role="api", services=(Service(name="x", port=70000),)),),
+        nodes=(
+            Node(id="api-1", role="api", services=(Service(name="x", port=70000),)),
+        ),
     )
 
     with pytest.raises(ValidationError):
@@ -57,7 +59,10 @@ def test_invalid_port_raises_validation_error():
 
 
 def test_threshold_comparison():
-    network = Network(name="tiny", nodes=(Node(id="a", role="r", services=(Service(name="s", port=1),)),))
+    network = Network(
+        name="tiny",
+        nodes=(Node(id="a", role="r", services=(Service(name="s", port=1),)),),
+    )
     report = score_network(network)
     assert meets_severity_threshold(report, "low") is True
 
@@ -69,7 +74,16 @@ def test_cli_json_output(tmp_path):
             {
                 "id": "edge",
                 "role": "gateway",
-                "services": [{"name": "http", "port": 80, "public": True, "encrypted": False, "authenticated": False, "criticality": 5}],
+                "services": [
+                    {
+                        "name": "http",
+                        "port": 80,
+                        "public": True,
+                        "encrypted": False,
+                        "authenticated": False,
+                        "criticality": 5,
+                    }
+                ],
             }
         ],
     }
@@ -96,13 +110,30 @@ def test_cli_supports_stdin_and_summary_only():
             {
                 "id": "edge",
                 "role": "gateway",
-                "services": [{"name": "http", "port": 80, "public": True, "encrypted": False, "authenticated": False, "criticality": 5}],
+                "services": [
+                    {
+                        "name": "http",
+                        "port": 80,
+                        "public": True,
+                        "encrypted": False,
+                        "authenticated": False,
+                        "criticality": 5,
+                    }
+                ],
             }
         ],
     }
 
     result = subprocess.run(
-        [sys.executable, "-m", "radarnet.cli", "-", "--format", "json", "--summary-only"],
+        [
+            sys.executable,
+            "-m",
+            "radarnet.cli",
+            "-",
+            "--format",
+            "json",
+            "--summary-only",
+        ],
         input=json.dumps(sample),
         check=False,
         capture_output=True,
