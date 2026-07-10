@@ -95,5 +95,7 @@ def score_network(network: Network) -> RiskReport:
 
 def meets_severity_threshold(report: RiskReport, threshold: str) -> bool:
     if threshold not in SEVERITY_ORDER:
-        raise ValueError(f"Invalid threshold '{threshold}'. Use one of: {', '.join(SEVERITY_ORDER)}")
+        raise ValueError(
+            f"Invalid threshold '{threshold}'. Use one of: {', '.join(SEVERITY_ORDER)}"
+        )
     return SEVERITY_ORDER.index(report.severity) >= SEVERITY_ORDER.index(threshold)
