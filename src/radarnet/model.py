@@ -22,7 +22,9 @@ class Service:
         if not self.name.strip():
             raise ValidationError("service.name must be non-empty")
         if not (1 <= self.port <= 65535):
-            raise ValidationError(f"service.port must be between 1 and 65535, got {self.port}")
+            raise ValidationError(
+                f"service.port must be between 1 and 65535, got {self.port}"
+            )
         if not (1 <= self.criticality <= 5):
             raise ValidationError(
                 f"service.criticality must be between 1 and 5, got {self.criticality}"
