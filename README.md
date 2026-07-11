@@ -1,61 +1,51 @@
-# RadarNet
+# WiFi Radar Pro — کشف و تحلیل پیشرفته دستگاه‌های شبکه
 
-RadarNet یک ابزار سبک برای امتیازدهی ریسک در شبکه‌های سرویس‌محور است.
+ابزاری قدرتمند و مدرن با رابط کاربری گرافیکی (GUI) توسعه‌یافته با PyQt6 برای اسکن، شناسایی، تحلیل ترافیک و مانیتورینگ امنیتی دستگاه‌های متصل به شبکه محلی (WiFi).
 
-## Features
+## ویژگی‌های جدید در نسخه Pro
 
-- مدل typed برای تعریف `Network`، `Node` و `Service`
-- اعتبارسنجی ورودی (پورت، criticality، تکراری نبودن node id و port)
-- موتور امتیازدهی ریسک با خروجی severity (`low` تا `critical`)
-- CLI برای تحلیل فایل JSON با خروجی `text` یا `json`
-- قابلیت `--fail-on` برای CI (شکست دادن pipeline بر اساس شدت ریسک)
-- پشتیبانی از ورودی `stdin` با `-` و خروجی خلاصه با `--summary-only`
+- **نقشه زنده واقعی OpenStreetMap**: بارگذاری خودکار نقشه تعاملی بدون نیاز به کلید API با Leaflet.js
+- **مختصات GPS و لینک گوگل مپ**: ارائه موقعیت جغرافیایی و دکمه دسترسی مستقیم به گوگل مپ برای هر دستگاه بر اساس IP
+- **اسکن پورت پیشرفته**: بررسی وضعیت ۳۰ پورت برتر شبکه به همراه بنر گربینگ (Banner Grabbing)
+- **مانیتور زنده ترافیک شبکه**: نمایش نرخ ارسال و دریافت داده‌ها (Bytes Sent/Received) به صورت زنده
+- **شناسایی دقیق سازنده از روی MAC**: استفاده از وب‌سایت `macvendors.com` برای یافتن نام دقیق کمپانی سازنده سخت‌افزار
+- **تعیین نام دستگاه (Hostname/NetBIOS/mDNS)**: کشف نام‌های شبکه به کمک پروتکل‌های مختلف
+- **رابط کاربری مدرن و تاریک (Neon Dark Theme)**: طراحی جذاب و خیره‌کننده با استایل‌های سفارشی و رادار انیمیشنی پویا
 
-## Quickstart
+## پیش‌نیازهای سیستم
 
+### نیازمندی‌های پایتون:
 ```bash
-python -m venv .venv
-source .venv/bin/activate
+pip install PyQt6 requests PyQt6-WebEngine
+```
+
+### وابستگی‌های سیستمی (لینوکس):
+برای عملکرد کامل اسکن و ابزارها، ابزارهای زیر را نصب کنید:
+```bash
+sudo apt install arp-scan nmap net-tools iw
+```
+
+## راهنمای نصب و اجرا
+
+۱. ابتدا بسته را به همراه متعلقات توسعه نصب کنید:
+```bash
 pip install -e .[dev]
-radarnet examples/sample-network.json
-radarnet examples/sample-network.json --format json
-cat examples/sample-network.json | radarnet - --format json --summary-only
-pytest -q
 ```
 
-## CLI
-
+۲. برنامه را با دسترسی روت (جهت اسکن ARP و مانیتور ترافیک) اجرا کنید:
 ```bash
-radarnet <input.json|-> [--format text|json] [--summary-only] [--fail-on low|medium|high|critical]
+sudo venv/bin/python -m radarnet.cli
+```
+یا می‌توانید به عنوان دستور مستقیم `radarnet` آن را از خط فرمان اجرا نمایید.
+
+## خروجی گزارش (JSON Export)
+پس از اتمام موفقیت‌آمیز اسکن، می‌توانید گزارش کاملی از وضعیت شبکه، اطلاعات مکانی، پورت‌های باز و آدرس‌های فیزیکی دستگاه‌ها را با فرمت استاندارد JSON ذخیره و صادر کنید.
+
+## تست‌ها
+برای اجرای تست‌های واحد تاییدیه عملکرد هِلپرها و بخش‌های محاسباتی برنامه:
+```bash
+python3 -m pytest
 ```
 
-- اگر `--fail-on high` بدهید و severity گزارش `high` یا `critical` باشد، کد خروجی 2 برمی‌گردد.
-- در صورت ورودی نامعتبر، CLI با پیام خطای واضح متوقف می‌شود.
-
-## JSON schema (simplified)
-
-```json
-{
-  "name": "network-name",
-  "nodes": [
-    {
-      "id": "node-id",
-      "role": "gateway|backend|...",
-      "services": [
-        {
-          "name": "https",
-          "port": 443,
-          "public": true,
-          "encrypted": true,
-          "authenticated": true,
-          "criticality": 1
-        }
-      ]
-    }
-  ]
-}
-```
-
-## License
-
+## لایسنس
 MIT
