@@ -1,14 +1,8 @@
-"""RadarNet package."""
+"""WiFi Radar Pro — Advanced Network Device Discovery & Analysis."""
 
-from .model import Network, Node, Service, ValidationError
-from .risk import RiskReport, meets_severity_threshold, score_network
+from .cli import WiFiRadarPro, main
 
 __all__ = [
-    "Network",
-    "Node",
-    "Service",
-    "ValidationError",
-    "RiskReport",
-    "score_network",
-    "meets_severity_threshold",
+    "WiFiRadarPro",
+    "main",
 ]

@@ -14,6 +14,11 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: MIT License",
 ]
+dependencies = [
+    "PyQt6",
+    "requests",
+    "PyQt6-WebEngine",
+]
 
 [project.scripts]
 radarnet = "radarnet.cli:main"
@@ -29,3 +34,6 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.ruff.lint]
+ignore = ["E722", "E741"]
